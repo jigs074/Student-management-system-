@@ -1,141 +1,231 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 // Jignesh Patel : project - "Student Management system "
 
 
-/* student records - sid , first name , last name , program they are enrolled in  
-* inherited class marks 
-* report card 
-* */
+
 class student {
+
+
 	string firstName; 
 	string lastName; 
 	int studentId; 
 	 
-	int grade; 
+	int grade;
+	int marks[3];
+	double percentage_Marks;
+
 
 public: 
 
 	void set_data() {
 		 student s; 
+		 int n; 
+		 long int tutionfees = 0;
+		 cout << "Type in for how many students you are looking data for" << endl; 
+		 cin >> n;
 
-
-		cout << "Enter the grade of a student you are looking for " << endl; 
-		cin >> grade; 
 		
-		if (grade == 10) {
+		 
+			 cout << "Student's first name :" << endl;
+			 cin >> s.firstName;
+			 cout << "Student last name : " << endl;
+			 cin >> s.lastName;
+			 cout << "Enter the student id of a student" << endl;
+			 cin >> s.studentId;
+
 			 
 
-			studentId = rand() % ((30 - 1)+1)  ; 
-			cout << studentId << endl; 
 
-		}
-		if (grade == 11) {
-			//int Grade_11id = 0; 
-			studentId = rand() % ((60 - 31) + 31); 
-			cout << studentId << endl; 
+			 // s.set_data(); 
 
-		}
-		if (grade == 12) {
-			//int Grade_12i = 0; 
-			studentId = rand() % ((90 - 61) + 61); 
-			cout << studentId << endl; 
 
-		}
-		if (grade != 10 && grade != 11 && grade != 12) {
-			cout << "Invalid input , This program is only for high school students" << endl;
+			 if (s.studentId <= 30) {
+				 s.grade = 10;
+				 tutionfees = 3000;
 
-		}
-		cout << "Student's first name :" << endl;
-		cin >> firstName; 
-		cout << "Student last name : " << endl; 
-		cin >> lastName; 
-		
-	}
-	// fees will increase to 5 % every year 
-	// grade 10 will get student id  from 1 to 30
-	// grade 11 will get student id from  31 to 60 
-	// grade 12 student will be having id from 61 to 90
-	// grade 10 tution fees - $ 3000 
-	// grade 11 tution fees - $ 3500 
-	// grade 12 tution fees- $ 4000 
+				 cout << "Tution fees of student in grade : " << s.grade << " is" << tutionfees << endl;
 
-	void  fees() {
-		student s; 
+			 }
 
-		long int Tutionfees =0 ; 
-		
-		cout << "Fees Information for St Mary's high school :  " << endl; 
-		if (s.studentId <= 30) {
-			Tutionfees = 3000; 
-			cout << "Fees for grade 10 is :  " << Tutionfees << endl; 
+			 else if (s.studentId <= 60 && s.studentId >= 30) {
+				 s.grade = 11;
+				 tutionfees = 3500;
 
-	   }
-		if (s.studentId <= 60 || s.studentId >= 30) {
-			Tutionfees = 3500; 
-			cout << "Fees for grade 11 is :  " << Tutionfees << endl; 
+				 cout << "Tution fees of student in grade : " << s.grade << " is" << tutionfees << endl;
 
-		}
-		if (s.studentId <= 90 || s.studentId >= 60) {
-			Tutionfees = 4000; 
-			cout << "Fees for grade 12 is : " << Tutionfees << endl; 
+			 }
 
-		}
-	}
+			 else if (s.studentId >= 60 && s.studentId <= 90) {
+				 s.grade = 12;
+				 tutionfees = 4000;
 
-};
-class Academics : public  student {
-	// after getting marks of student program should be able to calculate the average percentage 
-	// of student and we can also find out which student has highest percentage 
-	int marks [3];
-	// string subject[3] = { "physics" ,"Chemistry", "Maths " };
+				 cout << "Tution fees of student in grade : " << s.grade << " is" << tutionfees << endl;
+
+			 }
+		 
+
+		ofstream read;
+		read.open("sourceFile.txt", fstream::app);
+		read << "First Name: " << s.firstName << endl;
+		read << "Last Name " << s.lastName << endl;
+
+		read << "Student Id: " << s.studentId << endl;
+		read << "Grade: " << s.grade << endl;
+		read << "Tution fees of student is " << tutionfees << endl; 
+		read.close();
 	
-	double percentage_Marks; 
-public : 
-
-	Academics() {
 
 	}
+
+		
 	double get_AverageMarks() {
+		student s; 
+		// s.set_data(); 
+
 		int sum = 0;
 		int Max_Marks = 300;
 
 
 		cout << "Enter physics marks " << endl;
-		cin >> marks[0];
+		cin >> s.marks[0];
 		cout << "Enter chemistry marks " << endl;
-		cin >> marks[1];
+		cin >> s.marks[1];
 		cout << "Enter maths marks " << endl;
-		cin >> marks[2];
-		for (int i = 0; i <=2; i++){
-			sum += marks[i];
-	}
+		cin >> s.marks[2];
+		for (int i = 0; i <= 2; i++) {
+			sum += s.marks[i];
+		}
 
-		
-		cout << "The sum of marks of student is : " << endl; 
-		cout << sum << endl; 
+
+		cout << "The sum of marks of student is : " << endl;
+		cout << sum << endl;
 
 		// 40 + 40 + 40 = 120 120/3 =40 120 *100/150
-		cout << "Maximum marks of student is " << Max_Marks << endl; 
-		 percentage_Marks = sum * 100 / Max_Marks; 
-		
-
-		 cout << "The percentage of student is:" << percentage_Marks<<"%";
+		cout << "Maximum marks of student is " << Max_Marks << endl;
+		s.percentage_Marks = sum * 100 / Max_Marks;
 
 
-		 return percentage_Marks; 
+		cout << "The percentage of student is:" << s.percentage_Marks << "%";
+		ofstream read;
+		read.open("sourceFile.txt",fstream::app);
+		read << s.percentage_Marks << endl;
+		read.close();
+
+		return s.percentage_Marks;
 
 
-		
+
 	}
+	
+	int Emailid() {
+		
+		string Email;
+
+		cout << "Enter your email id " << endl;
+		cin >> Email;
+		if (!isalpha(Email[0])) {
+			// if the first element of a string is not character then it will be invalid 
+			// if email is not valid it will return 0 
+
+			return 0;
+		}
+		int at = -1; 
+		int dot = -1; 
+		int i = 0;
+
+		for (i = 0; i < Email.length();i++) {
+			 
+
+			if (Email[i] = '@') {
+				at = i;
+				return 1; 
+			}
+			else if (Email[i] = '.') {
+				dot = i;
+				return 1; 
+			}
+			
+			if (at == -1 || dot == -1) {
+				return 0;
+
+			}
+			if (dot > at) {
+				return 0;
+			}
+		}
+		
+
+			}
 
 };
 
-void main() {
-	student s; 
-	s.set_data(); 
-	s.fees(); 
 
 
 
-}
+	void main() {
+
+		cout << "Welcome to the student management system :  " << endl;
+		string userName; 
+		string password;
+		int n;
+		cout << "Enter userName :"; 
+		cin >> userName;
+		cout << "Enter password : "; 
+		cin >> password; 
+		cout << "Type in for how many students you are looking data for" << endl;
+		cin >> n;
+
+
+		
+		if (userName == "JigneshPatel" && password == "Jp12567")
+		{
+			int choice;
+			cout << "1 : Press 1 if you are looking for a student's information " << endl;
+			cout << "2 : Press 2 for verifying student's  contact info  " << endl;
+			cout << "Press 3 to exit the program " << endl;
+			cin >> choice;
+
+			student s;
+			int k;
+			for (int i = 0; i < n; i++) {
+				switch (choice) {
+				case 1:
+					s.set_data();
+					s.get_AverageMarks();
+					break;
+
+				case 2:
+
+					k = s.Emailid();
+					if (k == 1) {
+						cout << "Valid";
+						break;
+					}
+					else {
+						cout << "Invalid";
+						break;
+					}
+
+				case 3:
+					break;
+				}
+
+			}
+		}
+
+		else {
+			cout << "Acess denied Try again "<<endl; 
+
+		}
+
+		}
+
+
+	
+
+
+		
+	
+
